@@ -1,7 +1,7 @@
-FROM handcraftedbits/nginx-unit-java:8.92.14
+FROM handcraftedbits/nginx-unit-java:8.112.15
 MAINTAINER HandcraftedBits <opensource@handcraftedbits.com>
 
-ARG CONFLUENCE_VERSION=5.10.2
+ARG CONFLUENCE_VERSION=6.0.3
 
 COPY data /
 
