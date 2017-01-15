@@ -1,4 +1,4 @@
-FROM handcraftedbits/nginx-unit-java:8.112.15
+FROM handcraftedbits/nginx-unit-java:8.112.15-1
 MAINTAINER HandcraftedBits <opensource@handcraftedbits.com>
 
 ARG CONFLUENCE_VERSION=6.0.3
