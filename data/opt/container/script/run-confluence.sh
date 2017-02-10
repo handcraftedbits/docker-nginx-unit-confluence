@@ -6,15 +6,13 @@
 
 checkCommonRequiredVariables
 
-notifyUnitLaunched
-
 copyUnitConf nginx-unit-confluence > /dev/null
 
 logUrlPrefix "confluence"
 
 notifyUnitStarted
 
-# Fix CONFLUENCE configuration.
+# Fix Confluence configuration.
 
 confluence_config=/opt/confluence/conf/server.xml
 
@@ -26,8 +24,9 @@ fileSubstitute ${confluence_config} NGINX_URL_PREFIX `normalizeSlashesSingleSlas
 # Import certificate (so we can integrate with other Atlassian product instances).
 
 printf "changeit\nyes" | keytool -import -trustcacerts -alias root \
-     -file /etc/letsencrypt/live/${NGINX_UNIT_HOSTS}/fullchain.pem -keystore ${JAVA_HOME}/jre/lib/security/cacerts
+     -file /etc/letsencrypt/live/${NGINX_UNIT_HOSTS}/fullchain.pem -keystore \
+     /usr/lib/jvm/default-jvm/jre/lib/security/cacerts
 
  # Start Confluence.
 
-/opt/confluence/bin/start-confluence.sh -fg
+exec /opt/confluence/bin/start-confluence.sh -fg

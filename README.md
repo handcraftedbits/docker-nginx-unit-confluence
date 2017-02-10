@@ -6,9 +6,14 @@ A [Docker](https://www.docker.com) container that provides an
 
 # Features
 
-* Atlassian Confluence 6.0.3
+* Atlassian Confluence 6.0.5
 * NGINX Host SSL certificates are automatically imported into Confluence's JVM so Atlassian application links can
   easily be created
+
+# Support Notes
+
+This container uses [OpenJDK](http://openjdk.java.net/) for its JVM and as such this unit is considered an **unsupported
+platform** by Atlassian.
 
 # Usage
 
@@ -74,7 +79,7 @@ Finally, we need to create a link in our NGINX Host container to the `confluence
 Confluence.  Here is our final `docker-compose.yml` file:
 
 ```yaml
-version: '2'
+version: "3"
 
 services:
   confluence:
@@ -103,8 +108,9 @@ services:
 
   proxy:
     image: handcraftedbits/nginx-host
-    links:
-      - confluence
+    depends_on:
+      confluence:
+        condition: service_healthy
     ports:
       - "443:443"
     volumes:
