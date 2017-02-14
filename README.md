@@ -50,9 +50,8 @@ confluence:
   links:
     - db-confluence
   volumes:
+    - data:/opt/container/shared
     - /home/me/confluence:/opt/data/confluence
-  volumes_from:
-    - data
 
 db-confluence:
   image: postgres
@@ -69,8 +68,7 @@ Observe the following:
 * We create a link in `confluence` to `db-confluence` in order to allow Confluence to connect to our database.
 * We mount `/opt/data/confluence` using the local directory `/home/me/confluence`.  This is the directory where
   Confluence stores its data.
-* As with any other NGINX Host unit, we mount the volumes from our
-  [NGINX Host data container](https://github.com/handcraftedbits/docker-nginx-host-data), in this case named `data`.
+* As with any other NGINX Host unit, we mount our data volume, in this case named `data`, to `/opt/container/shared`.
 
 For more information on configuring the PostgreSQL container, consult its
 [documentation](https://hub.docker.com/_/postgres/).
@@ -79,7 +77,10 @@ Finally, we need to create a link in our NGINX Host container to the `confluence
 Confluence.  Here is our final `docker-compose.yml` file:
 
 ```yaml
-version: "3"
+version: "2.1"
+
+volumes:
+  data:
 
 services:
   confluence:
@@ -90,12 +91,8 @@ services:
     links:
       - db-confluence
     volumes:
+      - data:/opt/container/shared
       - /home/me/confluence:/opt/data/confluence
-    volumes_from:
-      - data
-
-  data:
-    image: handcraftedbits/nginx-host-data
 
   db-confluence:
     image: postgres
@@ -108,16 +105,14 @@ services:
 
   proxy:
     image: handcraftedbits/nginx-host
-    depends_on:
-      confluence:
-        condition: service_healthy
+    links:
+      - confluence
     ports:
       - "443:443"
     volumes:
+      - data:/opt/container/shared
       - /etc/letsencrypt:/etc/letsencrypt
       - /home/me/dhparam.pem:/etc/ssl/dhparam.pem
-    volumes_from:
-      - data
 ```
 
 This will result in making a Confluence instance available at `https://mysite.com/confluence`.

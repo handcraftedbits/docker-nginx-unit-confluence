@@ -1,4 +1,4 @@
-FROM handcraftedbits/nginx-unit:1.1.0
+FROM handcraftedbits/nginx-unit:1.1.2
 MAINTAINER HandcraftedBits <opensource@handcraftedbits.com>
 
 ARG CONFLUENCE_VERSION=6.0.5
@@ -6,7 +6,7 @@ ARG CONFLUENCE_VERSION=6.0.5
 COPY data /
 
 RUN apk update && \
-  apk add bash ca-certificates openjdk8-jre wget && \
+  apk add ca-certificates openjdk8-jre wget && \
 
   cd /opt && \
   wget https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}.tar.gz && \
