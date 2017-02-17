@@ -8,7 +8,7 @@ checkCommonRequiredVariables
 
 notifyUnitLaunched
 
-unitConf=`copyUnitConf nginx-unit-confluence`
+copyUnitConf nginx-unit-confluence > /dev/null
 
 logUrlPrefix "confluence"
 
@@ -31,4 +31,4 @@ printf "changeit\nyes" | keytool -import -trustcacerts -alias root \
 
 # Start Confluence.
 
-startProcessWithTrap onProcessStopped ${unitConf} /opt/confluence/bin/start-confluence.sh -fg
+exec /opt/confluence/bin/start-confluence.sh -fg
