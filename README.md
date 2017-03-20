@@ -6,7 +6,7 @@ A [Docker](https://www.docker.com) container that provides an
 
 # Features
 
-* Atlassian Confluence 6.0.5
+* Atlassian Confluence 6.1.0
 * NGINX Host SSL certificates are automatically imported into Confluence's JVM so Atlassian application links can
   easily be created
 

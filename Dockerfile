@@ -1,7 +1,7 @@
 FROM handcraftedbits/nginx-unit:1.1.3
 MAINTAINER HandcraftedBits <opensource@handcraftedbits.com>
 
-ARG CONFLUENCE_VERSION=6.0.5
+ARG CONFLUENCE_VERSION=6.1.0
 
 COPY data /
 
